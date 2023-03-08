@@ -11,10 +11,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collection;
 
-public class PopulateSQLite {
+public class Populate_JFSQL {
 
     public static void main(final String[] args) throws SQLException {
-        try (final Connection connection = DriverManager.getConnection(Constants.SQLITE_CONNECTION_STRING);
+        try (final Connection connection = DriverManager.getConnection(Constants.JFSQL_CONNECTION_STRING);
              final Statement statement = connection.createStatement()) {
             connection.setAutoCommit(false);
             final Collection<File> files = FileUtils.listFiles(new File(Constants.SCRIPTS_FOLDER), new String[]{"sql"}, false);
