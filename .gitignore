@@ -1,2 +1,5 @@
 /.idea/
 /target/
+/driver-comparison.iml
+/src/main/resources/myDatabase/
+/src/main/resources/myDatabase.db
