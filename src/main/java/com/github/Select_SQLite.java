@@ -11,6 +11,7 @@ import java.util.List;
 public class Select_SQLite {
 
     public static void main(final String[] args) {
+        final long startTime = System.nanoTime();
         try (final Connection connection = DriverManager.getConnection(Constants.SQLITE_CONNECTION_STRING);
             final Statement statement = connection.createStatement()) {
             select1(statement);
@@ -19,6 +20,8 @@ public class Select_SQLite {
         } catch (final SQLException e) {
             e.printStackTrace();
         }
+        final long endTime = System.nanoTime() - startTime;
+        System.out.println("duration: " + endTime / 1000000000 + "s");
     }
 
     private static void select1(final Statement statement) throws SQLException {
