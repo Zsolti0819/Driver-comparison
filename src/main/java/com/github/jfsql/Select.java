@@ -1,5 +1,6 @@
-package com.github;
+package com.github.jfsql;
 
+import com.github.Constants;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -7,15 +8,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
-public class Select_JFSQL {
+public class Select {
 
     public static void main(final String[] args) {
         final long startTime = System.nanoTime();
-        final Properties properties = new Properties();
-        properties.setProperty("persistence", "json");
-        try (final Connection connection = DriverManager.getConnection(Constants.JFSQL_CONNECTION_STRING, properties);
+        try (final Connection connection = DriverManager.getConnection(Constants.JFSQL_CONNECTION_STRING);
             final Statement statement = connection.createStatement()) {
             select1(statement);
             select2(statement);

@@ -1,5 +1,6 @@
-package com.github;
+package com.github.sqlite;
 
+import com.github.Constants;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -8,7 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Select_SQLite {
+public class Select {
 
     public static void main(final String[] args) {
         final long startTime = System.nanoTime();
@@ -26,7 +27,7 @@ public class Select_SQLite {
 
     private static void select1(final Statement statement) throws SQLException {
         final ResultSet resultSet = statement.executeQuery(
-            "SELECT * FROM Car INNER JOIN Sales ON Car.car_id = Sales.car_id INNER JOIN Owner ON Sales.owner_id = Owner.owner_id WHERE first_name = 'Nick' AND last_name = 'Mertz' ORDER BY Car.car_id ASC;");
+            "SELECT * FROM Car INNER JOIN Sales ON Car.car_id = Sales.car_id INNER JOIN Owner ON Sales.owner_id = Owner.owner_id WHERE first_name = 'Nick' AND last_name = 'Mertz';");
         final List<Integer> carIdsFromCars = new ArrayList<>();
         final List<String> makes = new ArrayList<>();
         final List<String> models = new ArrayList<>();

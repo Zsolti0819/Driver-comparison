@@ -1,5 +1,6 @@
-package com.github;
+package com.github.sqlite;
 
+import com.github.Constants;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -8,15 +9,13 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collection;
-import java.util.Properties;
 import org.apache.commons.io.FileUtils;
 
-public class Populate_JFSQL {
+public class Populate {
 
     public static void main(final String[] args) throws SQLException {
-        final Properties properties = new Properties();
-        properties.setProperty("persistence", "json");
-        try (final Connection connection = DriverManager.getConnection(Constants.JFSQL_CONNECTION_STRING, properties);
+        final long startTime = System.nanoTime();
+        try (final Connection connection = DriverManager.getConnection(Constants.SQLITE_CONNECTION_STRING);
             final Statement statement = connection.createStatement()) {
             connection.setAutoCommit(false);
             final Collection<File> files = FileUtils.listFiles(new File(Constants.SCRIPTS_FOLDER), new String[]{"sql"},
@@ -34,5 +33,7 @@ public class Populate_JFSQL {
             }
             connection.commit();
         }
+        final long endTime = System.nanoTime() - startTime;
+        System.out.println("duration: " + endTime / 1000000000 + "s");
     }
 }
