@@ -47,7 +47,6 @@ public class Main {
             // execute the insert statements in parallel
             insertStream.parallel().forEach(insertStmt -> {
                 try {
-                    System.out.println("insertStmt = " + insertStmt);
                     stmt.executeUpdate(insertStmt);
                 } catch (final SQLException e) {
                     e.printStackTrace();
@@ -57,7 +56,6 @@ public class Main {
             // execute the update statements in parallel
             updateStream.parallel().forEach(updateStmt -> {
                 try {
-                    System.out.println("updateStmt = " + updateStmt);
                     stmt.executeUpdate(updateStmt);
                 } catch (final SQLException e) {
                     e.printStackTrace();
