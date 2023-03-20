@@ -9,29 +9,25 @@ import java.util.stream.Stream;
 
 public class Main {
 
-    private static final String INSERT_TABLE = "myTable";
     private static final String[] INSERT_STATEMENTS = new String[]{
         "INSERT INTO myTable (col1, col2) VALUES (51, 'value51')",
         "INSERT INTO myTable (col1, col2) VALUES (52, 'value52')",
-        // add more insert statements here...
     };
 
     private static final String[] UPDATE_STATEMENTS = new String[]{
         "UPDATE myTable SET col2 = 'new_value1' WHERE col1 = 1",
         "UPDATE myTable SET col2 = 'new_value2' WHERE col1 = 2",
-        // add more update statements here...
     };
 
     public static void main(final String[] args) {
-        // execute some initial insert statements
         try (final Connection conn = DriverManager.getConnection(Constants.JFSQL_CONNECTION_STRING);
             final Statement stmt = conn.createStatement()) {
             stmt.execute("DROP TABLE IF EXISTS myTable");
-            conn.setAutoCommit(false);
             stmt.execute("CREATE TABLE myTable (col1 INTEGER, col2 TEXT)");
+            conn.setAutoCommit(false);
             for (int i = 1; i <= 50; i++) {
                 final String insertStmt =
-                    "INSERT INTO " + INSERT_TABLE + " (col1, col2) VALUES (" + i + ", 'initial_value')";
+                    "INSERT INTO myTable (col1, col2) VALUES (" + i + ", 'initial_value')";
                 stmt.executeUpdate(insertStmt);
                 conn.commit();
             }
