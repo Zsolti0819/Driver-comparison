@@ -12,8 +12,10 @@ public class MultiThreadingTest5 {
     public static void main(final String[] args) {
 
         try (final Connection connection = DriverManager.getConnection(Constants.JFSQL_CONNECTION_STRING)) {
+            connection.setAutoCommit(false);
             createTable(connection);
             insertInitialData(connection);
+            connection.commit();
         } catch (final SQLException e) {
             e.printStackTrace();
             return;
@@ -46,15 +48,16 @@ public class MultiThreadingTest5 {
                 thread.join();
             } catch (final InterruptedException e) {
                 e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
         }
 
     }
 
     private static void createTable(final Connection connection) throws SQLException {
-        final String sql = "CREATE TABLE IF NOT EXISTS myTable (id TEXT, threadId TEXT)";
         try (final Statement statement = connection.createStatement()) {
-            statement.executeUpdate(sql);
+            statement.execute("DROP TABLE IF EXISTS myTable");
+            statement.executeUpdate("CREATE TABLE myTable (id TEXT, threadId TEXT)");
         }
         System.out.println("Table myTable created");
     }
@@ -66,7 +69,6 @@ public class MultiThreadingTest5 {
                 statement.setString(1, "Id" + i);
                 statement.setString(2, "InitialData");
                 statement.executeUpdate();
-                System.out.println("Inserted row " + i);
             }
         }
     }
