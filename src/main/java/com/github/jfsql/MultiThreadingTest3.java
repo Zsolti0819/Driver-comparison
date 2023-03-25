@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * This case tests parallel insert when there is conflict between tables. Inserts committed at once (it's a *
- * transaction) per thread. 9 out of 10 threads will be stopped due PessimisticLockException, and only one thread's
- * inserts will be persisted and committed.
+ * This case tests parallel insert when there is conflict between tables. Inserts committed at once (it's a transaction)
+ * per thread. 9 out of 10 threads will be stopped due PessimisticLockException, and only one thread's inserts will be
+ * persisted and committed.
  */
 public class MultiThreadingTest3 {
 

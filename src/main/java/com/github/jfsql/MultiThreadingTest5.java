@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import org.apache.commons.lang3.RandomUtils;
 
 public class MultiThreadingTest5 {
 
@@ -79,20 +80,19 @@ public class MultiThreadingTest5 {
                 final String sql =
                     "INSERT INTO myTable (id, threadId) VALUES ('Id" + i + "', 'Thread" + threadNumber + "')";
                 statement.executeUpdate(sql);
-                System.out.println("Thread " + Thread.currentThread().getName() + " executing: " + sql);
-                System.out.println("Thread " + Thread.currentThread().getName() + " inserted row " + i);
+                System.out.println(Thread.currentThread().getName() + " executing: " + sql);
             }
         }
     }
 
     private static void executeUpdates(final Connection connection, final int threadNumber) throws SQLException {
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 10; i++) {
             try (final Statement statement = connection.createStatement()) {
                 final String sql =
-                    "UPDATE myTable SET threadId = 'ThreadIdEdited" + threadNumber + "' WHERE id = 'Id" + i + "'";
+                    "UPDATE myTable SET threadId = 'ThreadIdEdited" + threadNumber + "' WHERE id = 'Id"
+                        + RandomUtils.nextInt(1, 50) + "'";
                 statement.execute(sql);
-                System.out.println("Thread " + Thread.currentThread().getName() + " executing: " + sql);
-                System.out.println("Thread " + Thread.currentThread().getName() + " updated row " + i);
+                System.out.println(Thread.currentThread().getName() + " executing: " + sql);
             }
         }
     }
