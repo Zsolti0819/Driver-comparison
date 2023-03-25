@@ -23,9 +23,7 @@ public class Update {
     }
 
     private static ResultSet update1(final Statement statement) throws SQLException {
-        for (int i = 0; i < 100; i++) {
-            statement.execute("UPDATE Car SET color = 'blue' WHERE car_id = " + i);
-        }
+        statement.execute("UPDATE Car SET color = 'blue' WHERE car_id <= 100");
         return statement.executeQuery("SELECT * FROM Car WHERE car_id <= 100");
     }
 
