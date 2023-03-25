@@ -1,14 +1,16 @@
-package com.github;
+package com.github.jfsql;
 
+import com.github.Constants;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * This case tests parallel insert when there is no conflict between tables. Every insert is committed.
+ * This case tests parallel insertion when there is no conflict between tables. Each insert is committed. No exceptions
+ * are expected. There is different threadId attribute in each table that indicates which thread inserted the entry.
  */
-public class MultiThreadingTest {
+public class MultiThreadingTest1 {
 
     private static final int NUM_THREADS = 10;
 
@@ -21,6 +23,7 @@ public class MultiThreadingTest {
             connections[i] = DriverManager.getConnection(Constants.JFSQL_CONNECTION_STRING);
             statements[i] = connections[i].createStatement();
             tableNames[i] = "myTable" + i;
+            statements[i].execute("DROP TABLE IF EXISTS " + tableNames[i]);
             statements[i].execute("CREATE TABLE " + tableNames[i] + "(id TEXT, threadId TEXT)");
         }
 
@@ -60,7 +63,7 @@ public class MultiThreadingTest {
         public void run() {
             try {
                 final long threadId = Thread.currentThread().getId();
-                for (int i = 0; i < 10; i++) {
+                for (int i = 1; i <= 10; i++) {
                     statement.execute(
                         "INSERT INTO " + tableName + "(id, threadId) VALUES (" + i + ", " + threadId + ")");
                 }

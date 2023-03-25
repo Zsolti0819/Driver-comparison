@@ -1,4 +1,4 @@
-package com.github;
+package com.github.util;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

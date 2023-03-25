@@ -1,7 +1,7 @@
 package com.github.sqlite;
 
 import com.github.Constants;
-import com.github.ResultSetPrinter;
+import com.github.util.ResultSetPrinter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -14,7 +14,7 @@ public class Select {
         final long startTime = System.nanoTime();
         try (final Connection connection = DriverManager.getConnection(Constants.SQLITE_CONNECTION_STRING);
             final Statement statement = connection.createStatement()) {
-            ResultSetPrinter.printResultSet(select1(statement));;
+            ResultSetPrinter.printResultSet(select1(statement));
             ResultSetPrinter.printResultSet(select2(statement));
             ResultSetPrinter.printResultSet(select3(statement));
         } catch (final SQLException e) {

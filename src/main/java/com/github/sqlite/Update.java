@@ -1,7 +1,7 @@
 package com.github.sqlite;
 
 import com.github.Constants;
-import com.github.ResultSetPrinter;
+import com.github.util.ResultSetPrinter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
