@@ -34,6 +34,6 @@ public class Populate {
             connection.commit();
         }
         final long endTime = System.nanoTime() - startTime;
-        System.out.println("duration: " + endTime / 1000000000 + "s");
+        System.out.println("duration: " + endTime / 10000000 + "ms");
     }
 }

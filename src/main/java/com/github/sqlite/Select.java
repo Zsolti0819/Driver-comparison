@@ -21,7 +21,7 @@ public class Select {
             e.printStackTrace();
         }
         final long endTime = System.nanoTime() - startTime;
-        System.out.println("duration: " + endTime / 1000000000 + "s");
+        System.out.println("duration: " + endTime / 10000000 + "ms");
     }
 
     private static ResultSet select1(final Statement statement) throws SQLException {
