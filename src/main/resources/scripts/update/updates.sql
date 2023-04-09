@@ -1,0 +1,10 @@
+UPDATE Car SET color = 'blue' WHERE car_id < 1234;
+UPDATE Car SET fuel_type = 'Hybrid' WHERE make = 'Toyota';
+UPDATE Dealership SET name = 'ABC Motors' WHERE dealership_id = 1;
+UPDATE Dealership SET phone_number = '+1-555-123-4567' WHERE name LIKE '%Cole, Klocko and Schuster%';
+UPDATE Owner SET email = 'newemail@example.com' WHERE owner_id = 685;
+UPDATE Owner SET address = '123 Main St, Anytown, USA' WHERE last_name = 'Smith';
+UPDATE Sales SET sale_price = 15000.00 WHERE sale_id = 456;
+UPDATE Sales SET dealership_id = 2 WHERE car_id = 1234;
+UPDATE Service SET service_type = 'Oil Change', service_description = 'Regular maintenance' WHERE service_id = 789;
+UPDATE Service SET service_cost = 75.00 WHERE dealership_id = 6;
