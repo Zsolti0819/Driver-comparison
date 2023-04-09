@@ -2,40 +2,40 @@ package com.github.jfsql;
 
 import com.github.Constants;
 import com.github.util.ResultSetPrinter;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Collection;
+import org.apache.commons.io.FileUtils;
 
 public class Select {
 
     public static void main(final String[] args) {
-        final long startTime = System.nanoTime();
         try (final Connection connection = DriverManager.getConnection(Constants.JFSQL_CONNECTION_STRING);
             final Statement statement = connection.createStatement()) {
-            ResultSetPrinter.printResultSet(select1(statement));
-            ResultSetPrinter.printResultSet(select2(statement));
-            ResultSetPrinter.printResultSet(select3(statement));
+            final Collection<File> files = FileUtils.listFiles(new File(Constants.SCRIPTS_FOLDER + File.separator + "select"), new String[]{"sql"},
+                false);
+            for (final File file : files) {
+                try (final BufferedReader reader = new BufferedReader(new FileReader(file.getAbsolutePath()))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        final long startTime = System.nanoTime();
+                        System.out.println(line);
+                        statement.execute(line);
+                        final long endTime = System.nanoTime() - startTime;
+                        System.out.println("duration: " + endTime / 10000000 + "ms");
+                    }
+                } catch (final Exception e) {
+                    System.out.println("Error executing SQL script: " + e.getMessage());
+                }
+            }
         } catch (final SQLException e) {
             e.printStackTrace();
         }
-        final long endTime = System.nanoTime() - startTime;
-        System.out.println("duration: " + endTime / 10000000 + "ms");
-    }
-
-    private static ResultSet select1(final Statement statement) throws SQLException {
-        return statement.executeQuery(
-            "SELECT * FROM Car INNER JOIN Sales ON Car.car_id = Sales.car_id INNER JOIN Owner ON Sales.owner_id = Owner.owner_id WHERE first_name = 'Nick' AND last_name = 'Mertz';");
-    }
-
-    private static ResultSet select2(final Statement statement) throws SQLException {
-        return statement.executeQuery(
-            "SELECT Dealership.dealership_id, email, phone_number, address, sale_id, Sales.car_id, owner_id, Sales.dealership_id, sale_date, sale_price, Car.car_id, make, model, year, color, transmission_type, fuel_type, engine_size, number_of_doors FROM Dealership INNER JOIN Sales ON Dealership.dealership_id = Sales.dealership_id INNER JOIN Car ON Sales.car_id = Car.car_id WHERE make = 'Toyota' AND model = 'Supra';\n");
-    }
-
-    private static ResultSet select3(final Statement statement) throws SQLException {
-        return statement.executeQuery(
-            "SELECT Car.car_id, make, model, year, color, transmission_type, fuel_type, engine_size, number_of_doors, sale_id, Sales.car_id, owner_id, dealership_id, sale_date, sale_price FROM Car LEFT OUTER JOIN Sales ON Car.car_id = Sales.car_id WHERE Sales.car_id = 1;\n");
     }
 }

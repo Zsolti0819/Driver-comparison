@@ -115,7 +115,7 @@ public class SqlScriptGenerator {
     }
 
     private static void createCarScript() {
-        try (final BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/scripts/cars.sql"))) {
+        try (final BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/scripts/populate/cars.sql"))) {
             for (int i = 0; i < 10000; i++) {
                 if (i == 0) {
                     writer.write("DROP TABLE IF EXISTS Car;\n" +
@@ -142,7 +142,7 @@ public class SqlScriptGenerator {
     }
 
     private static void createOwnerScript() {
-        try (final BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/scripts/owner.sql"))) {
+        try (final BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/scripts/populate/owner.sql"))) {
             for (int i = 0; i < 5000; i++) {
                 if (i == 0) {
                     writer.write("DROP TABLE IF EXISTS Owner;\n" +
@@ -167,7 +167,7 @@ public class SqlScriptGenerator {
     }
 
     private static void createDealershipScript() {
-        try (final BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/scripts/dealership.sql"))) {
+        try (final BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/scripts/populate/dealership.sql"))) {
             for (int i = 0; i < 20; i++) {
                 if (i == 0) {
                     writer.write("DROP TABLE IF EXISTS Dealership;\n" +
@@ -193,7 +193,7 @@ public class SqlScriptGenerator {
     }
 
     private static void createSalesScript() {
-        try (final BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/scripts/sales.sql"))) {
+        try (final BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/scripts/populate/sales.sql"))) {
             for (int i = 0; i < 8000; i++) {
                 if (i == 0) {
                     writer.write("DROP TABLE IF EXISTS Sales;\n" +
@@ -224,7 +224,7 @@ public class SqlScriptGenerator {
     }
 
     private static void createServiceScript() {
-        try (final BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/scripts/service.sql"))) {
+        try (final BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/scripts/populate/service.sql"))) {
             for (int i = 0; i < 10000; i++) {
                 if (i == 0) {
                     writer.write("DROP TABLE IF EXISTS Service;\n" +
@@ -240,7 +240,7 @@ public class SqlScriptGenerator {
 
     public static void main(final String[] args) throws IOException {
 
-        Files.createDirectories(Path.of("src/main/resources/scripts/"));
+        Files.createDirectories(Path.of("src/main/resources/scripts/populate/"));
 
         createCarScript();
 

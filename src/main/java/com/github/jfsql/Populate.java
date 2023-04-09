@@ -18,7 +18,7 @@ public class Populate {
         try (final Connection connection = DriverManager.getConnection(Constants.JFSQL_CONNECTION_STRING);
             final Statement statement = connection.createStatement()) {
             connection.setAutoCommit(false);
-            final Collection<File> files = FileUtils.listFiles(new File(Constants.SCRIPTS_FOLDER), new String[]{"sql"},
+            final Collection<File> files = FileUtils.listFiles(new File(Constants.SCRIPTS_FOLDER + File.separator + "populate"), new String[]{"sql"},
                 false);
             for (final File file : files) {
                 try (final BufferedReader reader = new BufferedReader(new FileReader(file.getAbsolutePath()))) {

@@ -1,0 +1,5 @@
+SELECT * FROM Car;
+SELECT * FROM Dealership;
+SELECT * FROM Owner;
+SELECT * FROM Sales;
+SELECT * FROM Service;
