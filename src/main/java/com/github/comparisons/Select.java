@@ -4,6 +4,7 @@ import com.github.Constants;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -24,21 +25,18 @@ public class Select {
                 final long startTime = System.nanoTime();
                 int i = 0;
                 while (i != 10000) {
-                    final long loopStartTime = System.nanoTime();
                     try (final BufferedReader reader = new BufferedReader(new FileReader(file.getAbsolutePath()))) {
                         String line;
                         while ((line = reader.readLine()) != null) {
-                            statement.executeQuery(line);
+                            statement.execute(line);
                             i++;
                         }
-                    } catch (final Exception e) {
-                        System.out.println("Error executing SQL script: " + e.getMessage());
+                    } catch (final IOException e) {
+                        e.printStackTrace();
                     }
-                    final long loopEndTime = System.nanoTime() - loopStartTime;
-                    System.out.println(i + " statements executed, loop time: " + loopEndTime / 10000000 + "ms");
                 }
                 final long endTime = System.nanoTime() - startTime;
-                System.out.println(connectionString + " duration: " + endTime / 10000000 + "ms");
+                System.out.println(connectionString + " duration: " + endTime / 1000000 + "ms");
             } catch (final SQLException e) {
                 e.printStackTrace();
             }

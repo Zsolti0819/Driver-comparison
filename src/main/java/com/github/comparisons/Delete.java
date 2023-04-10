@@ -10,37 +10,36 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.stream.Stream;
-import org.apache.commons.io.FileUtils;
 
-public class Populate {
+public class Delete {
 
     public static void main(final String[] args) {
         final Stream<String> connectionStringStream = Arrays.stream(Constants.CONNECTION_STRINGS);
+        final File file = new File(
+            Constants.SCRIPTS_FOLDER + File.separator + "delete" + File.separator + "deletes.sql");
         connectionStringStream.forEach(connectionString -> {
             System.out.println("Currently using: " + connectionString);
             try (final Connection connection = DriverManager.getConnection(connectionString);
                 final Statement statement = connection.createStatement()) {
-                connection.setAutoCommit(false);
-                final Collection<File> files = FileUtils.listFiles(
-                    new File(Constants.SCRIPTS_FOLDER + File.separator + "populate"), new String[]{"sql"},
-                    false);
+//                connection.setAutoCommit(false);
                 final long startTime = System.nanoTime();
-                for (final File file : files) {
+                int i = 0;
+                while (i != 10000) {
                     try (final BufferedReader reader = new BufferedReader(new FileReader(file.getAbsolutePath()))) {
                         String line;
                         while ((line = reader.readLine()) != null) {
-                            System.out.println(line);
                             statement.execute(line);
+                            i++;
                         }
                     } catch (final IOException e) {
                         e.printStackTrace();
                     }
+//                connection.commit();
                 }
-                connection.commit();
                 final long endTime = System.nanoTime() - startTime;
-                System.out.println("duration: " + endTime / 1000000 + "ms");
+                System.out.println(connectionString + " duration: " + endTime / 1000000 + "ms");
+
             } catch (final SQLException e) {
                 e.printStackTrace();
             }
