@@ -22,7 +22,7 @@ public class Update {
             System.out.println("Currently using: " + connectionString);
             try (final Connection connection = DriverManager.getConnection(connectionString);
                 final Statement statement = connection.createStatement()) {
-//                connection.setAutoCommit(false);
+                connection.setAutoCommit(false);
                 final long startTime = System.nanoTime();
                 int i = 0;
                 while (i != 10000) {
@@ -35,8 +35,8 @@ public class Update {
                     } catch (final IOException e) {
                         e.printStackTrace();
                     }
-//                connection.commit();
                 }
+                connection.commit();
                 final long endTime = System.nanoTime() - startTime;
                 System.out.println(connectionString + " duration: " + endTime / 1000000 + "ms");
             } catch (final SQLException e) {

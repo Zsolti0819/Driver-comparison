@@ -38,11 +38,10 @@ public class Insert {
                     } catch (final IOException e) {
                         e.printStackTrace();
                     }
-                    connection.commit();
                 }
+                connection.commit();
                 final long endTime = System.nanoTime() - startTime;
                 System.out.println(connectionString + " duration: " + endTime / 1000000 + "ms");
-
             } catch (final SQLException e) {
                 e.printStackTrace();
             }
