@@ -10,19 +10,15 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
-import java.util.stream.Stream;
 import org.springframework.stereotype.Service;
 
 @Service
 public class Populate {
 
     public void populate() {
-        final Stream<String> connectionStringStream = Arrays.stream(Constants.CONNECTION_STRINGS);
         final File file = new File(
-            Constants.SCRIPTS_FOLDER + File.separator + "populate" + File.separator + "populate.sql");
-
-        connectionStringStream.forEach(connectionString -> {
-            System.out.println("Populating the database with entries. Currently using: " + connectionString);
+            Constants.SCRIPTS_FOLDER + File.separator + "populate.sql");
+        Arrays.stream(Constants.CONNECTION_STRINGS).forEach(connectionString -> {
             try (final Connection connection = DriverManager.getConnection(connectionString);
                 final Statement statement = connection.createStatement()) {
                 connection.setAutoCommit(false);
@@ -38,7 +34,8 @@ public class Populate {
 
                 connection.commit();
                 final long endTime = System.nanoTime() - startTime;
-                System.out.println("duration: " + endTime / 1000000 + "ms");
+                System.out.println(
+                    "Populated the database " + connectionString + " - Duration: " + endTime / 1000000 + "ms");
             } catch (final SQLException e) {
                 e.printStackTrace();
             }

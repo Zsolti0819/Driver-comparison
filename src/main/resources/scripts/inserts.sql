@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS Car;
+CREATE TABLE Car (car_id INTEGER NOT NULL, make TEXT NOT NULL, model TEXT NOT NULL, year INTEGER NOT NULL, color TEXT NOT NULL, transmission_type TEXT NOT NULL, fuel_type TEXT NOT NULL, engine_size REAL NOT NULL, number_of_doors INTEGER NOT NULL);
 INSERT INTO Car (car_id, make, model, year, color, transmission_type, fuel_type, engine_size, number_of_doors) VALUES (0, 'Nissan', 'Pathfinder', 1992, 'orchid', 'Manual', 'Electric', 4.5, 2);
 INSERT INTO Car (car_id, make, model, year, color, transmission_type, fuel_type, engine_size, number_of_doors) VALUES (1, 'Ford', 'Mustang', 2013, 'salmon', 'Manual', 'Gasoline', 2.1, 2);
 INSERT INTO Car (car_id, make, model, year, color, transmission_type, fuel_type, engine_size, number_of_doors) VALUES (2, 'Hyundai', 'Venue', 1995, 'green', 'Manual', 'Electric', 3.1, 3);

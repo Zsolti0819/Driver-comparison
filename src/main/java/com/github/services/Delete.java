@@ -10,18 +10,15 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
-import java.util.stream.Stream;
 import org.springframework.stereotype.Service;
 
 @Service
 public class Delete {
 
     public void delete() {
-        final Stream<String> connectionStringStream = Arrays.stream(Constants.CONNECTION_STRINGS);
         final File file = new File(
-            Constants.SCRIPTS_FOLDER + File.separator + "delete" + File.separator + "deletes.sql");
-        connectionStringStream.forEach(connectionString -> {
-            System.out.println("Executing 10 000 deletes. Currently using: " + connectionString);
+            Constants.SCRIPTS_FOLDER + File.separator + "deletes.sql");
+        Arrays.stream(Constants.CONNECTION_STRINGS).forEach(connectionString -> {
             try (final Connection connection = DriverManager.getConnection(connectionString);
                 final Statement statement = connection.createStatement()) {
                 connection.setAutoCommit(false);
@@ -40,7 +37,9 @@ public class Delete {
                 }
                 connection.commit();
                 final long endTime = System.nanoTime() - startTime;
-                System.out.println(connectionString + " duration: " + endTime / 1000000 + "ms");
+                System.out.println(
+                    "Executed 10 000 DELETE statements on " + connectionString + " - Duration: " + endTime / 1000000
+                        + "ms");
             } catch (final SQLException e) {
                 e.printStackTrace();
             }

@@ -10,18 +10,15 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
-import java.util.stream.Stream;
 import org.springframework.stereotype.Service;
 
 @Service
 public class Select {
 
     public void select() {
-        final Stream<String> connectionStringStream = Arrays.stream(Constants.CONNECTION_STRINGS);
         final File file = new File(
-            Constants.SCRIPTS_FOLDER + File.separator + "select" + File.separator + "selects.sql");
-        connectionStringStream.forEach(connectionString -> {
-            System.out.println("Executing 10 000 selects. Currently using: " + connectionString);
+            Constants.SCRIPTS_FOLDER + File.separator + "selects.sql");
+        Arrays.stream(Constants.CONNECTION_STRINGS).forEach(connectionString -> {
             try (final Connection connection = DriverManager.getConnection(connectionString);
                 final Statement statement = connection.createStatement()) {
                 final long startTime = System.nanoTime();
@@ -38,7 +35,9 @@ public class Select {
                     }
                 }
                 final long endTime = System.nanoTime() - startTime;
-                System.out.println(connectionString + " duration: " + endTime / 1000000 + "ms");
+                System.out.println(
+                    "Executed 10 000 SELECT statements on " + connectionString + " - Duration: " + endTime / 1000000
+                        + "ms");
             } catch (final SQLException e) {
                 e.printStackTrace();
             }
