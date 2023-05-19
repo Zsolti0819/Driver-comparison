@@ -10,9 +10,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
-import org.springframework.stereotype.Service;
+import lombok.experimental.UtilityClass;
 
-@Service
+@UtilityClass
 public class Insert {
 
     public void insert() {

@@ -10,15 +10,18 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
-import org.springframework.stereotype.Service;
+import java.util.concurrent.atomic.AtomicInteger;
+import lombok.experimental.UtilityClass;
 
-@Service
+@UtilityClass
 public class Select {
 
     public void select() {
         final File file = new File(
             Constants.SCRIPTS_FOLDER + File.separator + "selects.sql");
+        final AtomicInteger j = new AtomicInteger();
         Arrays.stream(Constants.CONNECTION_STRINGS).forEach(connectionString -> {
+            j.getAndIncrement();
             try (final Connection connection = DriverManager.getConnection(connectionString);
                 final Statement statement = connection.createStatement()) {
                 final long startTime = System.nanoTime();
@@ -28,6 +31,7 @@ public class Select {
                         String line;
                         while ((line = reader.readLine()) != null) {
                             statement.execute(line);
+//                        ResultSetPrinter.printResultSet(statement.executeQuery(line), connectionString.contains("jfsql") ? "jfsql.txt" : "sqlite.txt");
                             i++;
                         }
                     } catch (final IOException e) {
