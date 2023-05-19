@@ -40,7 +40,7 @@ public class Select {
                 }
                 final long endTime = System.nanoTime() - startTime;
                 System.out.println(
-                    "Executed 10 000 SELECT statements on " + connectionString + " - Duration: " + endTime / 1000000
+                    "Executed 10 000 SELECT statements on " + connectionString + " duration: " + endTime / 1000000
                         + "ms");
             } catch (final SQLException e) {
                 e.printStackTrace();

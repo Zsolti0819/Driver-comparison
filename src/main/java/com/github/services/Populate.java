@@ -35,7 +35,7 @@ public class Populate {
                 connection.commit();
                 final long endTime = System.nanoTime() - startTime;
                 System.out.println(
-                    "Populated the database " + connectionString + " - Duration: " + endTime / 1000000 + "ms");
+                    "Populated the database " + connectionString + " duration: " + endTime / 1000000 + "ms");
             } catch (final SQLException e) {
                 e.printStackTrace();
             }
