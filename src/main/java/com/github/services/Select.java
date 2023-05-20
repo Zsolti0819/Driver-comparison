@@ -9,7 +9,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
 import lombok.experimental.UtilityClass;
 
@@ -20,7 +19,7 @@ public class Select {
         final File file = new File(
             Constants.SCRIPTS_FOLDER + File.separator + "selects.sql");
         final AtomicInteger j = new AtomicInteger();
-        Arrays.stream(Constants.CONNECTION_STRINGS).forEach(connectionString -> {
+        for (final String connectionString : Constants.CONNECTION_STRINGS) {
             j.getAndIncrement();
             try (final Connection connection = DriverManager.getConnection(connectionString);
                 final Statement statement = connection.createStatement()) {
@@ -31,7 +30,8 @@ public class Select {
                         String line;
                         while ((line = reader.readLine()) != null) {
                             statement.execute(line);
-//                        ResultSetPrinter.printResultSet(statement.executeQuery(line), connectionString.contains("jfsql") ? "jfsql.txt" : "sqlite.txt");
+//                            Only comment out this when i is set to 39
+//                            ResultSetPrinter.printResultSet(statement.executeQuery(line), connectionString.contains("jfsql") ? "jfsql.txt" : "sqlite.txt");
                             i++;
                         }
                     } catch (final IOException e) {
@@ -45,6 +45,7 @@ public class Select {
             } catch (final SQLException e) {
                 e.printStackTrace();
             }
-        });
+        }
     }
+
 }

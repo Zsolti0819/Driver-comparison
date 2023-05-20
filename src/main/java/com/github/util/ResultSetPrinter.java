@@ -14,7 +14,7 @@ public class ResultSetPrinter {
     public static void printResultSet(final ResultSet resultSet, final String filePath)
         throws SQLException, IOException {
         final int numColumns = resultSet.getMetaData().getColumnCount();
-        final PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true))); // Append mode
+        final PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));
 
         while (resultSet.next()) {
             for (int i = 1; i <= numColumns; i++) {
@@ -22,7 +22,6 @@ public class ResultSetPrinter {
             }
             writer.println();
         }
-
         writer.close();
     }
 

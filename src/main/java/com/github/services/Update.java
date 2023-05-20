@@ -9,7 +9,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -18,7 +17,7 @@ public class Update {
     public void update() {
         final File file = new File(
             Constants.SCRIPTS_FOLDER + File.separator + "updates.sql");
-        Arrays.stream(Constants.CONNECTION_STRINGS).forEach(connectionString -> {
+        for (final String connectionString : Constants.CONNECTION_STRINGS) {
             try (final Connection connection = DriverManager.getConnection(connectionString);
                 final Statement statement = connection.createStatement()) {
                 connection.setAutoCommit(false);
@@ -43,6 +42,7 @@ public class Update {
             } catch (final SQLException e) {
                 e.printStackTrace();
             }
-        });
+        }
     }
+
 }
