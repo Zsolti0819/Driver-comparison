@@ -1,6 +1,5 @@
-package com.github.services;
+package com.github.jfsql.util;
 
-import com.github.Constants;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -12,11 +11,11 @@ import java.sql.Statement;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
-public class Update {
+public class Delete {
 
-    public void update() {
+    public void delete() {
         final File file = new File(
-            Constants.SCRIPTS_FOLDER + File.separator + "updates.sql");
+            Constants.SCRIPTS_FOLDER + File.separator + "deletes.sql");
         for (final String connectionString : Constants.CONNECTION_STRINGS) {
             try (final Connection connection = DriverManager.getConnection(connectionString);
                 final Statement statement = connection.createStatement()) {
@@ -37,7 +36,7 @@ public class Update {
                 connection.commit();
                 final long endTime = System.nanoTime() - startTime;
                 System.out.println(
-                    "Executed 10 000 UPDATE statements on " + connectionString + " duration: " + endTime / 1000000
+                    "Executed 10 000 DELETE statements on " + connectionString + ", duration: " + endTime / 1000000
                         + "ms");
             } catch (final SQLException e) {
                 e.printStackTrace();

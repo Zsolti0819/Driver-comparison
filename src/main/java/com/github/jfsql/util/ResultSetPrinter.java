@@ -1,4 +1,4 @@
-package com.github.util;
+package com.github.jfsql.util;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

@@ -1,6 +1,5 @@
-package com.github.services;
+package com.github.jfsql.util;
 
-import com.github.Constants;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -12,33 +11,37 @@ import java.sql.Statement;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
-public class Populate {
+public class Update {
 
-    public void populate() {
+    public void update() {
         final File file = new File(
-            Constants.SCRIPTS_FOLDER + File.separator + "populate.sql");
+            Constants.SCRIPTS_FOLDER + File.separator + "updates.sql");
         for (final String connectionString : Constants.CONNECTION_STRINGS) {
             try (final Connection connection = DriverManager.getConnection(connectionString);
                 final Statement statement = connection.createStatement()) {
                 connection.setAutoCommit(false);
                 final long startTime = System.nanoTime();
-                try (final BufferedReader reader = new BufferedReader(new FileReader(file.getAbsolutePath()))) {
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        statement.execute(line);
+                int i = 0;
+                while (i != 10000) {
+                    try (final BufferedReader reader = new BufferedReader(new FileReader(file.getAbsolutePath()))) {
+                        String line;
+                        while ((line = reader.readLine()) != null) {
+                            statement.execute(line);
+                            i++;
+                        }
+                    } catch (final IOException e) {
+                        e.printStackTrace();
                     }
-                } catch (final IOException e) {
-                    e.printStackTrace();
                 }
-
                 connection.commit();
                 final long endTime = System.nanoTime() - startTime;
                 System.out.println(
-                    "Populated the database " + connectionString + " duration: " + endTime / 1000000 + "ms");
+                    "Executed 10 000 UPDATE statements on " + connectionString + ", duration: " + endTime / 1000000
+                        + "ms");
             } catch (final SQLException e) {
                 e.printStackTrace();
             }
         }
     }
-    
+
 }

@@ -1,6 +1,5 @@
-package com.github.services;
+package com.github.jfsql.util;
 
-import com.github.Constants;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -40,7 +39,7 @@ public class Select {
                 }
                 final long endTime = System.nanoTime() - startTime;
                 System.out.println(
-                    "Executed 10 000 SELECT statements on " + connectionString + " duration: " + endTime / 1000000
+                    "Executed 10 000 SELECT statements on " + connectionString + ", duration: " + endTime / 1000000
                         + "ms");
             } catch (final SQLException e) {
                 e.printStackTrace();

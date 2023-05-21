@@ -1,10 +1,5 @@
-package com.github;
+package com.github.jfsql.util;
 
-import com.github.services.Delete;
-import com.github.services.Insert;
-import com.github.services.Populate;
-import com.github.services.Select;
-import com.github.services.Update;
 import java.util.Scanner;
 
 public class Main {

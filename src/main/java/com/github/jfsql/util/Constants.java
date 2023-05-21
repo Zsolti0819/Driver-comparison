@@ -1,4 +1,4 @@
-package com.github;
+package com.github.jfsql.util;
 
 import java.io.File;
 import java.nio.file.Path;
