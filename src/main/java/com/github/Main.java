@@ -7,7 +7,7 @@ import com.github.services.Select;
 import com.github.services.Update;
 import java.util.Scanner;
 
-public class DemoApplication {
+public class Main {
 
     public static void main(final String[] args) {
         Populate.populate();
@@ -26,24 +26,28 @@ public class DemoApplication {
             option = scanner.nextInt();
 
             switch (option) {
-                case 1 -> {
+                case 1:
                     System.out.println("INSERT operation selected");
                     Insert.insert();
-                }
-                case 2 -> {
+                    break;
+                case 2:
                     System.out.println("SELECT operation selected");
                     Select.select();
-                }
-                case 3 -> {
+                    break;
+                case 3:
                     System.out.println("UPDATE operation selected");
                     Update.update();
-                }
-                case 4 -> {
+                    break;
+                case 4:
                     System.out.println("DELETE operation selected");
                     Delete.delete();
-                }
-                case 0 -> System.out.println("Exiting program...");
-                default -> System.out.println("Invalid option! Please try again.");
+                    break;
+                case 0:
+                    System.out.println("Exiting program...");
+                    break;
+                default:
+                    System.out.println("Invalid option! Please try again.");
+                    break;
             }
 
             System.out.println();
